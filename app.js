@@ -15,6 +15,10 @@ app.use(cors({
     optionsSuccessStatus: 204
 }));
 
+app.use(express.json()); 
+app.use('/users', userRouter);
+
+
 async function startServer() {
     try {
         await database();
