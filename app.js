@@ -2,6 +2,8 @@ import express from 'express';
 import database from './db.js';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import userRouter from './routes/userRoutes.js'
+
 
 dotenv.config();
 
@@ -14,6 +16,10 @@ app.use(cors({
     preflightContinue: false,
     optionsSuccessStatus: 204
 }));
+
+app.use(express.json()); 
+app.use('/users', userRouter);
+
 
 async function startServer() {
     try {
