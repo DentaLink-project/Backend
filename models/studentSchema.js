@@ -9,6 +9,6 @@ const studentSchema = new mongoose.Schema({
     tools: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tool' }]
 }, { timestamps: true })
 
-const Student = User.discriminator('student', studentSchema);
+const Student = User.discriminator('Student', studentSchema);
 
 export default Student;
