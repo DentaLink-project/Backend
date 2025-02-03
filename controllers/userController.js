@@ -7,7 +7,7 @@ import {nanoid , customAlphabet} from "nanoid";
 //============================**forgetPassword**================================
 export const forgetPassword = asyncHandler(async(req,res,next)=>{
     const {email} = req.body
-    const user=await userModel.findOne({email : email.toLowercase()})
+    const user=await userModel.findOne({email : email.toLowerCase()})
     if(!user){
         return next (new AppError("user not exist",404))
     }
@@ -23,7 +23,7 @@ export const forgetPassword = asyncHandler(async(req,res,next)=>{
 //============================**resetpassword**================================
 export const resetPassword = asyncHandler(async(req,res,next)=>{
     const {email , code , password} = req.body
-    const user=await userModel.findOne({email : email.toLowercase()})
+    const user=await userModel.findOne({email : email.toLowerCase()})
     if(!user){
         return next (new AppError("user not exist",404))
     }
@@ -41,7 +41,7 @@ export const resetPassword = asyncHandler(async(req,res,next)=>{
 //============================**login**================================
 export const login = asyncHandler(async(req,res,next)=>{
     const {email , password} = req.body
-    const user=await userModel.findOne({email : email.toLowercase(), confirmed : true})
+    const user=await userModel.findOne({email : email.toLowerCase(), confirmed : true})
     if(!user|| !bcrypt.compareSync(password , user.password)){
         return next (new AppError("user not exist or invalid password",404))
     }
