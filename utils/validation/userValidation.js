@@ -19,4 +19,19 @@ check('universityID').notEmpty().withMessage('universityID is required'),
         return;
     }
     next();
-}];
+    }];
+
+    export const loginValidator = [
+        check('email').notEmpty().withMessage('email is missing')
+            .isEmail().withMessage('invalid email'),
+        check('password').notEmpty().withMessage('password is missing')
+            .isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
+        (req, res, next)=> {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                res.status(400).json({ errors: errors.array() });
+                return;
+            }
+            next();
+        }
+    ]
