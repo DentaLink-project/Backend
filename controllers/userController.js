@@ -1,5 +1,7 @@
 import { signUpStudent } from "../services/signupService.js";
 import { generateToken, generateRefreshToken } from "../utils/jwtUtils.js";
+import { loginService } from "../services/loginService.js";
+
 export const signUp = async (req, res, next) => {
     try {
         const { name, email, password, phone, role, academicYear, universityID } = req.body;
@@ -25,3 +27,14 @@ export const signUp = async (req, res, next) => {
         res.status(500).json({ message: "Server error", error: err.message });
     };
 }
+
+export const login = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const { accessToken, refreshToken } = await loginService({ email, password });
+
+        res.status(200).json({ accessToken, refreshToken });
+    } catch (error) {
+        res.status(401).json({ message: error.message });
+    }
+};
