@@ -1,6 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import User from "./userSchema";
-
+import User from "./userSchema.js";
 const studentSchema = new mongoose.Schema({
     academicYear: { type: String, required: true },
     universityID: { type: Number, required: true },

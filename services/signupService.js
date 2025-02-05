@@ -1,6 +1,6 @@
-import Student from "../models/studentSchema";
-import { hashPassword } from "../utils/passwordUtils";
-import { uploadImage } from "./imageService";
+import Student from "../models/studentSchema.js";
+import { hashPassword } from "../utils/passwordUtils.js";
+import { uploadImage } from "./imageService.js";
 
 export const signUpStudent = async ({ name, email, password, phone, role, academicYear, universityID, file }) => {
     if (!file) {

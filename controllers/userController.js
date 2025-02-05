@@ -1,6 +1,5 @@
-import { signUpStudent } from "../services/studentService";
-import { generateToken, generateRefreshToken } from "../utils/tokenUtils";
-
+import { signUpStudent } from "../services/signupService.js";
+import { generateToken, generateRefreshToken } from "../utils/jwtUtils.js";
 export const signUp = async (req, res, next) => {
     try {
         const { name, email, password, phone, role, academicYear, universityID } = req.body;

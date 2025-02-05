@@ -1,4 +1,4 @@
-import supabase from "../utils/supabase";
+import supabase from "../utils/supabase.js";
 import multer from "multer";
 
 const storage = multer.memoryStorage();
