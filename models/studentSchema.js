@@ -6,7 +6,9 @@ const studentSchema = new mongoose.Schema({
     universityID: { type: Number, required: true },
     IDPicture: { type: String, required: true },
     cases: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Case' }],
-    tools: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tool' }]
+    tools: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tool' }],
+    otpCode: { type: String },
+    otpExpiresAt: { type: Date }
 }, { timestamps: true })
 
 const Student = User.discriminator('Student', studentSchema);
