@@ -3,6 +3,7 @@ import database from './db.js';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import swaggerDocs from './swaggerConfig.js';
 import userRoutes from './routes/userRoutes.js';
 
 dotenv.config();
@@ -20,6 +21,8 @@ app.use(cors({
 app.use(bodyParser.json());
 
 app.use('/api', userRoutes);
+
+swaggerDocs(app);
 
 async function startServer() {
     try {
