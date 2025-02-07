@@ -1,8 +1,9 @@
 import jwt from 'jsonwebtoken';
-import User from '../models/userSchema';
-import { tokenBlacklist } from "../services/authService"; // Import the blacklist
+import Student from '../models/studentSchema.js';
+import { tokenBlacklist } from "../controllers/userController.js";
+import dotenv from 'dotenv';
+dotenv.config();
 
-require('dotenv').config();
 
 
 export function checkAuth(req, res, next) {
@@ -33,14 +34,14 @@ export function checkAuth(req, res, next) {
         }
 
         const { id } = decoded;
-        const user = await User.findById(id);
+        const student = await Student.findById(id);
 
-    if (!user) {
+    if (!student) {
         res.status(404).json({ message: 'User not found' });
         return;
         }
 
-        req.user = user;
+        req.student = student;
         next();
     })
 }
