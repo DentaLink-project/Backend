@@ -35,6 +35,7 @@ const router = express.Router();
  *                 type: number
  *               idPicture:
  *                 type: string
+ *                 format: binary
  *     responses:
  *       201:
  *         description: User created successfully
@@ -149,7 +150,7 @@ router.post("/users/reset-password", resetPasswordController);
  *   post:
  *     summary: Log out a user
  *     tags: [User]
- *      security:
+ *     security:
  *       - bearerAuth: []
  *     requestBody:
  *       required: true
@@ -166,6 +167,6 @@ router.post("/users/reset-password", resetPasswordController);
  *       500:
  *         description: Server error
  */
-router.post("/users/logout",checkAuth ,logoutController);
+router.post("/users/logout", checkAuth, logoutController);
 
 export default router;
