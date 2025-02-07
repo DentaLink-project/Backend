@@ -2,6 +2,7 @@ import express from "express";
 import { signUpvalidator, loginValidator } from "../utils/validation/userValidation.js";
 import { upload } from "../services/imageService.js";
 import { signupController, loginController, forgetPasswordController, verifyOTPController, resetPasswordController, logoutController } from "../controllers/userController.js";
+import { checkAuth } from "../middleware/checkAuth.js";
 
 const router = express.Router();
 
@@ -148,6 +149,8 @@ router.post("/users/reset-password", resetPasswordController);
  *   post:
  *     summary: Log out a user
  *     tags: [User]
+ *      security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -163,6 +166,6 @@ router.post("/users/reset-password", resetPasswordController);
  *       500:
  *         description: Server error
  */
-router.post("/users/logout", logoutController);
+router.post("/users/logout",checkAuth ,logoutController);
 
 export default router;
