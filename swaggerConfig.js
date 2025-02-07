@@ -12,7 +12,7 @@ const options = {
         },
         servers: [
             {
-                url: 'https://backend-production-2daf.up.railway.app',
+                url: 'https://backend-production-2daf.up.railway.app/api',
             },
         ],
     },
