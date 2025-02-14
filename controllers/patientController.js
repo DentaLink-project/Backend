@@ -92,6 +92,9 @@ export const toggleFavoriteController = async (req, res) => {
     try {
         const studentId = req.student._id; 
         const { patientId } = req.body;
+        if (!patientId) {
+        return res.status(400).json({ message: "Patient ID is required" });
+        }
 
     } catch (error) {
         console.error("Error in toggleFavoriteController:", error);
