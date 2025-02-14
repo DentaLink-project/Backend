@@ -132,6 +132,9 @@ export const deletePatient = async (req, res) => {
     try {
         const studentId = req.student._id;
         const { patientId } = req.params; 
+        if (!patientId) {
+            return res.status(400).json({ message: "Patient ID is required" });
+        }
 
     } catch (error) {
         res.status(500).json({ message: error.message });
