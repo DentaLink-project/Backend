@@ -102,3 +102,13 @@ export const toggleFavoriteController = async (req, res) => {
         res.status(500).json({ success: false, message: "Internal server error", error: error.message });
     }
 }
+
+//============================**fetchFavouritePatients**======================
+export const fetchFavoritePatients = async (req, res) => {
+    try {
+
+    } catch (error) {
+        res.status(500).json({ message: "Failed to fetch favorites", error: error.message });
+    }
+};
+
