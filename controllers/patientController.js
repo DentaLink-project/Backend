@@ -117,6 +117,7 @@ export const fetchFavoritePatients = async (req, res) => {
 //==============================**updatePatient**===================================
 export const editPatient = async (req, res) => {
     try {
+        const studentId = req.student._id; 
 
     } catch (error) {
         res.status(500).json({ message: error.message });
