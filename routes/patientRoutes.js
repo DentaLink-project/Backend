@@ -17,6 +17,7 @@ router.post("/add", checkAuth, upload.single("file"), patientCaseValidator,PC.cr
 router.get("/", checkAuth, PC.fetchAllPatients);
 router.post("/toggle", checkAuth, PC.toggleFavoriteController);
 router.get("/favorites", checkAuth, PC.fetchFavoritePatients);
+router.get("/my-patients", checkAuth, PC.fetchPatientsByUser); 
 
 
 
