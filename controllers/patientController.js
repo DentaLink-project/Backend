@@ -91,6 +91,7 @@ export const fetchPatientsByUser = async (req, res) => {
 export const toggleFavoriteController = async (req, res) => {
     try {
         const studentId = req.student._id; 
+        const { patientId } = req.body;
 
     } catch (error) {
         console.error("Error in toggleFavoriteController:", error);
