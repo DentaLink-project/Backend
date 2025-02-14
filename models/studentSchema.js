@@ -7,6 +7,7 @@ const studentSchema = new mongoose.Schema({
     IDPicture: { type: String, required: true },
     cases: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Case' }],
     tools: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tool' }],
+    favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Patient" }],
     otpCode: { type: String },
     otpExpiresAt: { type: Date }
 }, { timestamps: true })
