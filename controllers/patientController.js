@@ -45,3 +45,11 @@ export const fetchPatientsByTitle = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 };
+//=============================**fetchPatientById**===================================
+export const fetchPatientById = async (req, res) => {
+    try {
+
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+};
