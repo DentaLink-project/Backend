@@ -18,6 +18,7 @@ router.get("/", checkAuth, PC.fetchAllPatients);
 router.post("/toggle", checkAuth, PC.toggleFavoriteController);
 router.get("/favorites", checkAuth, PC.fetchFavoritePatients);
 router.get("/my-patients", checkAuth, PC.fetchPatientsByUser); 
+router.get("/search",PC.fetchPatientsByTitle);
 
 
 
