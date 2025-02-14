@@ -51,6 +51,7 @@ export const fetchPatientById = async (req, res) => {
         const { id } = req.params;
         const studentId = req.student._id; 
 
+        const patient = await getPatientById(id, studentId);
         
         res.status(200).json(patient);
     } catch (error) {
