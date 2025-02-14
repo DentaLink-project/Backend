@@ -6,7 +6,7 @@ export const getPatientsByUser = async (user) => {
             .populate("createdBy", "name email");
         const patientsWithFavStatus = patients.map(patient => ({
             ...patient._doc,
-            isFavPatient: user.favorites.some(fav => fav.toString() === patient._id.toString()), // تحقق من كونه في المفضلة
+            isFavPatient: user.favorites.some(fav => fav.toString() === patient._id.toString())
         }));
 
         return patientsWithFavStatus;
