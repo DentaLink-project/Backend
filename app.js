@@ -5,6 +5,8 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import swaggerDocs from './swaggerConfig.js';
 import userRoutes from './routes/userRoutes.js';
+import patientRoutes from './routes/patientRoutes.js'
+
 
 dotenv.config();
 
@@ -21,6 +23,8 @@ app.use(cors({
 app.use(bodyParser.json());
 
 app.use('/api', userRoutes);
+app.use('/api/patient', patientRoutes);
+
 
 swaggerDocs(app);
 
