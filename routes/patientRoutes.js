@@ -14,6 +14,7 @@ import { checkAuth } from "../middleware/checkAuth.js";
 const router = express.Router();
 
 router.post("/add", checkAuth, upload.single("file"), patientCaseValidator,PC.createPatient);
+router.get("/", checkAuth, PC.fetchAllPatients);
 
 
 
