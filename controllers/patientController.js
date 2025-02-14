@@ -130,6 +130,7 @@ export const editPatient = async (req, res) => {
 //=============================**deletePatient**===================================
 export const deletePatient = async (req, res) => {
     try {
+        const studentId = req.student._id;
 
     } catch (error) {
         res.status(500).json({ message: error.message });
