@@ -6,6 +6,7 @@ export const patientCaseValidator = [
     check("gender").notEmpty().withMessage("Gender is required"),
     check("phone").notEmpty().withMessage("Phone number is required").isLength({ min: 11, max: 11 }).withMessage("Phone number must be exactly 11 digits"),
     check("title").notEmpty().withMessage("Case title is required"),
+    check("location").notEmpty().withMessage("Location is required"),
     check("category").notEmpty().withMessage("Category is required"),
     (req, res, next) => {
         const errors = validationResult(req);
@@ -23,6 +24,7 @@ export const validatePatientUpdate = [
     check("gender").notEmpty().withMessage("Gender is required"),
     check("phone").notEmpty().withMessage("Phone number is required").isLength({ min: 11, max: 11 }).withMessage("Phone number must be exactly 11 digits"),
     check("title").notEmpty().withMessage("Case title is required"),
+    check("location").notEmpty().withMessage("Location is required"),
     check("category").notEmpty().withMessage("Category is required"),
     (req, res, next) => {
         const errors = validationResult(req);
