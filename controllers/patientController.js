@@ -114,19 +114,6 @@ export const fetchFavoritePatients = async (req, res) => {
     }
 };
 
-//==============================**updatePatient**===================================
-export const editPatient = async (req, res) => {
-    try {
-        const studentId = req.student._id; 
-        const { id } = req.params; 
-        const updateData = req.body;
-        const updatedPatient = await updatePatientService(studentId, id, updateData);
-        res.status(200).json({ message: "Patient updated successfully", patient: updatedPatient });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-
 //=============================**deletePatient**===================================
 export const deletePatient = async (req, res) => {
     try {
@@ -135,7 +122,8 @@ export const deletePatient = async (req, res) => {
         if (!patientId) {
             return res.status(400).json({ message: "Patient ID is required" });
         }
-
+        const result = await deletePatientById(studentId, patientId);
+        res.status(200).json(result);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
