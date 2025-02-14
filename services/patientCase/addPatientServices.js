@@ -1,7 +1,7 @@
 import Patient from "../../models/patientCaseSchema.js";
 import { uploadImage } from "../imageService.js";
 
-export const addPatient = async ({ name, title, age, gender, phone, category, description, file, createdBy }) => {
+export const addPatient = async ({ name, title, age, gender, phone, category, description,location, file, createdBy }) => {
     try {
         let imageUrl = null;
 
@@ -18,6 +18,7 @@ export const addPatient = async ({ name, title, age, gender, phone, category, de
             title,
             category,
             description,
+            location,
             file: imageUrl,
             createdBy
         });
