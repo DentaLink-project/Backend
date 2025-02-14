@@ -12,7 +12,7 @@ import { updatePatientService } from "../services/patientCase/updatePatientDetai
 //=============================**createPatient**===================================
 export const createPatient = async (req, res) => {
     try {
-        const { name, title, age, gender, phone, category, description } = req.body;
+        const { name, title, age, gender, phone, category,location, description } = req.body;
         const file = req.file;
 
         const patient = await addPatient({
@@ -22,6 +22,7 @@ export const createPatient = async (req, res) => {
             gender,
             phone,
             category,
+            location,
             description,
             file,
             createdBy: req.student.id 
