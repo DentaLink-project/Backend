@@ -76,7 +76,9 @@ export const fetchAllPatients = async (req, res) => {
 //=============================**fetchPatientsByUser**===================================
 export const fetchPatientsByUser = async (req, res) => {
     try {
-
+        const user = await Student.findById(req.student._id).populate("favorites"); 
+  
+        res.status(200).json({ success: true, data: patients });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
