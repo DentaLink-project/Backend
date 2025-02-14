@@ -63,6 +63,7 @@ export const fetchPatientById = async (req, res) => {
 export const fetchAllPatients = async (req, res) => {
     try {
         const userId = req.student._id; 
+        const user = await Student.findById(userId);
 
         res.status(200).json(patients);
     } catch (error) {
