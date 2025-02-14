@@ -20,6 +20,7 @@ router.get("/favorites", checkAuth, PC.fetchFavoritePatients);
 router.get("/my-patients", checkAuth, PC.fetchPatientsByUser); 
 router.get("/search",PC.fetchPatientsByTitle);
 router.get("/:id" ,checkAuth,PC.fetchPatientById)
+router.put("/:id", checkAuth,validatePatientUpdate, PC.editPatient);
 
 
 
