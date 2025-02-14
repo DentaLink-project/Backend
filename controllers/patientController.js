@@ -49,6 +49,7 @@ export const fetchPatientsByTitle = async (req, res) => {
 export const fetchPatientById = async (req, res) => {
     try {
         const { id } = req.params;
+        const studentId = req.student._id; 
 
         
         res.status(200).json(patient);
