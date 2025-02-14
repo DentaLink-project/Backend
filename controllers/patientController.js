@@ -34,11 +34,5 @@ export const createPatient = async (req, res) => {
 };
 //=============================**fetchPatientsByTitle**===================================
 export const fetchPatientsByTitle = async (req, res) => {
-    try {
-        const { title } = req.query;
 
-
-    } catch (error) {
-        res.status(404).json({ message: error.message });
-    }
 };
