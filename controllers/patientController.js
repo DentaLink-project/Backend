@@ -39,7 +39,8 @@ export const fetchPatientsByTitle = async (req, res) => {
         if (!title) {
             return res.status(400).json({ message: "Title is required for search" });
         }
-
+        const patients = await getPatientByTitle(title);
+        res.status(200).json(patients);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
