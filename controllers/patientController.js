@@ -95,7 +95,8 @@ export const toggleFavoriteController = async (req, res) => {
         if (!patientId) {
         return res.status(400).json({ message: "Patient ID is required" });
         }
-
+            const result = await toggleFavorite(studentId, patientId);
+            res.status(200).json({ success: true, message: result });
     } catch (error) {
         console.error("Error in toggleFavoriteController:", error);
         res.status(500).json({ success: false, message: "Internal server error", error: error.message });
