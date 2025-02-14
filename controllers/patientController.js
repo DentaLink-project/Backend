@@ -34,5 +34,13 @@ export const createPatient = async (req, res) => {
 };
 //=============================**fetchPatientsByTitle**===================================
 export const fetchPatientsByTitle = async (req, res) => {
+    try {
+        const { title } = req.query;
+        if (!title) {
+            return res.status(400).json({ message: "Title is required for search" });
+        }
 
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
 };
