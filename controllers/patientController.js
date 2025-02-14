@@ -118,6 +118,7 @@ export const fetchFavoritePatients = async (req, res) => {
 export const editPatient = async (req, res) => {
     try {
         const studentId = req.student._id; 
+        const { id } = req.params; 
 
         res.status(200).json({ message: "Patient updated successfully", patient: updatedPatient });
     } catch (error) {
