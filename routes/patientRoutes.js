@@ -16,6 +16,7 @@ const router = express.Router();
 router.post("/add", checkAuth, upload.single("file"), patientCaseValidator,PC.createPatient);
 router.get("/", checkAuth, PC.fetchAllPatients);
 router.post("/toggle", checkAuth, PC.toggleFavoriteController);
+router.get("/favorites", checkAuth, PC.fetchFavoritePatients);
 
 
 
