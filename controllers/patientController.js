@@ -120,6 +120,7 @@ export const editPatient = async (req, res) => {
         const studentId = req.student._id; 
         const { id } = req.params; 
         const updateData = req.body;
+        const updatedPatient = await updatePatientService(studentId, id, updateData);
         res.status(200).json({ message: "Patient updated successfully", patient: updatedPatient });
     } catch (error) {
         res.status(500).json({ message: error.message });
