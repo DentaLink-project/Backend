@@ -131,6 +131,7 @@ export const editPatient = async (req, res) => {
 export const deletePatient = async (req, res) => {
     try {
         const studentId = req.student._id;
+        const { patientId } = req.params; 
 
     } catch (error) {
         res.status(500).json({ message: error.message });
