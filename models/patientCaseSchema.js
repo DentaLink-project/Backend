@@ -9,10 +9,13 @@ Schema({
     category: { type: String, required: true }, 
     location: { type: String, required: true},
     description: { type: String },              
-    file: { type: String },         
+    file: { type: [String], required: true },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "Student", required: true },
 
 }, { timestamps: true });
+
+patientSchema.index({ title: "text" });
+
 
 const Patient = mongoose.model("Patient", patientSchema);
 export default Patient;
