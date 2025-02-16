@@ -9,9 +9,6 @@ export const getPatientById = async (id, studentId) => {
             throw new Error("Patient not found");
         }
         const student = await Student.findById(studentId);
-        if (!student) {
-            throw new Error("Student not found");
-        }
         const isFavPatient = student.favorites.some(fav => fav.toString() === patient._id.toString());
         return { ...patient._doc, isFavPatient };
     } catch (error) {
