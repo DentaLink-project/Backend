@@ -20,7 +20,7 @@ app.use(cors({
 
 app.use(bodyParser.json());
 
-app.use('/api', userRoutes);
+app.use('/users/api', userRoutes);
 
 swaggerDocs(app);
 

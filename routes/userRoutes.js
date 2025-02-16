@@ -42,7 +42,7 @@ const router = express.Router();
  *       500:
  *         description: Server error
  */
-router.post("/users/signup", upload.single('idPicture'), signUpvalidator, signupController);
+router.post("/signup", upload.single('idPicture'), signUpvalidator, signupController);
 
 /**
  * @swagger
@@ -67,7 +67,7 @@ router.post("/users/signup", upload.single('idPicture'), signUpvalidator, signup
  *       401:
  *         description: Invalid credentials
  */
-router.post("/users/login", loginValidator, loginController);
+router.post("/login", loginValidator, loginController);
 
 /**
  * @swagger
@@ -90,7 +90,7 @@ router.post("/users/login", loginValidator, loginController);
  *       500:
  *         description: Server error
  */
-router.post("/users/forget-password", forgetPasswordController);
+router.post("/forget-password", forgetPasswordController);
 
 /**
  * @swagger
@@ -115,7 +115,7 @@ router.post("/users/forget-password", forgetPasswordController);
  *       500:
  *         description: Server error
  */
-router.post("/users/verify-otp", verifyOTPController);
+router.post("/verify-otp", verifyOTPController);
 
 /**
  * @swagger
@@ -142,7 +142,7 @@ router.post("/users/verify-otp", verifyOTPController);
  *       500:
  *         description: Server error
  */
-router.post("/users/reset-password", resetPasswordController);
+router.post("/reset-password", resetPasswordController);
 
 /**
  * @swagger
@@ -167,6 +167,6 @@ router.post("/users/reset-password", resetPasswordController);
  *       500:
  *         description: Server error
  */
-router.post("/users/logout", checkAuth, logoutController);
+router.post("/logout", checkAuth, logoutController);
 
 export default router;
