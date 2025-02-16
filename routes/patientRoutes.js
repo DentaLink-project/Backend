@@ -16,12 +16,8 @@ const router = express.Router();
 router.post("/add", checkAuth, upload.array("file"), patientCaseValidator,PC.createPatient);
 router.get("/", checkAuth, PC.fetchAllPatients);
 router.post("/toggle", checkAuth, PC.toggleFavoriteController);
-router.get("/favorites", checkAuth, PC.fetchFavoritePatients);
-router.get("/my-patients", checkAuth, PC.fetchPatientsByUser); 
 router.get("/search",checkAuth,PC.fetchPatientsByTitle);
 router.get("/:id" ,checkAuth,PC.fetchPatientById)
-router.put("/:id", checkAuth, upload.array("file"), patientCaseValidator, PC.editPatient);
-router.delete("/:patientId", checkAuth, PC.deletePatient);
 
 
 export default router;
