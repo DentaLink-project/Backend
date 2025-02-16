@@ -1,5 +1,5 @@
 import Student from "../models/studentSchema.js";
-import { addPatient } from "../services/patientCase/addPatientServices.js";
+import {addPatient} from "../services/patientCase/addPatientServices.js"
 import { deletePatientById } from "../services/patientCase/deletePatientByIdServices.js";
 import { getFavoritePatients } from "../services/patientCase/getAllFavouritePatient.js";
 import { getAllPatients } from "../services/patientCase/getAllPatientServices.js";
@@ -7,13 +7,13 @@ import { getPatientById} from "../services/patientCase/getPatientByIdServices.js
 import { getPatientByTitle } from "../services/patientCase/getPatientByTitle.js";
 import { getPatientsByUser } from "../services/patientCase/getPatientByUserService.js";
 import toggleFavorite from "../services/patientCase/toggleFavouritePatient.js";
-import { updatePatientService } from "../services/patientCase/updatePatientDetails.js";
+import {updatePatientService} from '../services/patientCase/updatePatientDetails.js'
 
 //=============================**createPatient**===================================
 export const createPatient = async (req, res) => {
     try {
-        const { name, title, age, gender, phone, category,location, description } = req.body;
-        const file = req.file;
+        const { name, title, age, gender, phone, category, location, description } = req.body;
+        const files = req.files;
 
         const patient = await addPatient({
             name,
@@ -24,8 +24,8 @@ export const createPatient = async (req, res) => {
             category,
             location,
             description,
-            file,
-            createdBy: req.student.id 
+            files, 
+            createdBy: req.student.id
         });
 
         res.status(201).json({ message: "Patient added successfully", patient });
@@ -33,6 +33,7 @@ export const createPatient = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
 //=============================**fetchPatientsByTitle**===================================
 export const fetchPatientsByTitle = async (req, res) => {
     try {
@@ -118,16 +119,18 @@ export const fetchFavoritePatients = async (req, res) => {
 //==============================**updatePatient**===================================
 export const editPatient = async (req, res) => {
     try {
-        const studentId = req.student._id; 
-        const { id } = req.params; 
+        const studentId = req.student._id;
+        const { id } = req.params;
         const updateData = req.body;
-        const updatedPatient = await updatePatientService(studentId, id, updateData);
+        const files = req.files;  
+
+        const updatedPatient = await updatePatientService(studentId, id, updateData, files);
+
         res.status(200).json({ message: "Patient updated successfully", patient: updatedPatient });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
-
 //=============================**deletePatient**===================================
 export const deletePatient = async (req, res) => {
     try {
