@@ -8,7 +8,7 @@ check('password').notEmpty().withMessage('Password is required')
 check('phone').notEmpty().withMessage('Phone number is required')
     .isLength({ min: 11, max: 11 }).withMessage('Phone number must be exactly 11 digits'),
     
-check('universityID').notEmpty().withMessage('National ID is required'),
+check('academicYear').notEmpty().withMessage('academic Year is required'),
 check('universityID').notEmpty().withMessage('universityID is required'),
 
 
