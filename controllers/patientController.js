@@ -1,13 +1,9 @@
 import Student from "../models/studentSchema.js";
 import {addPatient} from "../services/patientCase/addPatientServices.js"
-import { deletePatientById } from "../services/patientCase/deletePatientByIdServices.js";
-import { getFavoritePatients } from "../services/patientCase/getAllFavouritePatient.js";
 import { getAllPatients } from "../services/patientCase/getAllPatientServices.js";
 import { getPatientById} from "../services/patientCase/getPatientByIdServices.js";
 import { getPatientByTitle } from "../services/patientCase/getPatientByTitle.js";
-import { getPatientsByUser } from "../services/patientCase/getPatientByUserService.js";
 import toggleFavorite from "../services/patientCase/toggleFavouritePatient.js";
-import {updatePatientService} from '../services/patientCase/updatePatientDetails.js'
 
 //=============================**createPatient**===================================
 export const createPatient = async (req, res) => {
@@ -75,19 +71,6 @@ export const fetchAllPatients = async (req, res) => {
         res.status(500).json({ message: "Failed to fetch patients", error: error.message });
     }
 };
-//=============================**fetchPatientsByUser**===================================
-export const fetchPatientsByUser = async (req, res) => {
-    try {
-        const user = await Student.findById(req.student._id).populate("favorites"); 
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
-        const patients = await getPatientsByUser(user);
-        res.status(200).json({ success: true, data: patients });
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
-};
 
 //==============================**toggleFavorite**===================================
 export const toggleFavoriteController = async (req, res) => {
@@ -105,43 +88,3 @@ export const toggleFavoriteController = async (req, res) => {
     }
 }
 
-//============================**fetchFavouritePatients**======================
-export const fetchFavoritePatients = async (req, res) => {
-    try {
-        const studentId = req.student._id;
-        const favoritePatients = await getFavoritePatients(studentId);
-        res.status(200).json(favoritePatients);
-    } catch (error) {
-        res.status(500).json({ message: "Failed to fetch favorites", error: error.message });
-    }
-};
-
-//==============================**updatePatient**===================================
-export const editPatient = async (req, res) => {
-    try {
-        const studentId = req.student._id;
-        const { id } = req.params;
-        const updateData = req.body;
-        const files = req.files;  
-
-        const updatedPatient = await updatePatientService(studentId, id, updateData, files);
-
-        res.status(200).json({ message: "Patient updated successfully", patient: updatedPatient });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-//=============================**deletePatient**===================================
-export const deletePatient = async (req, res) => {
-    try {
-        const studentId = req.student._id;
-        const { patientId } = req.params; 
-        if (!patientId) {
-            return res.status(400).json({ message: "Patient ID is required" });
-        }
-        const result = await deletePatientById(studentId, patientId);
-        res.status(200).json(result);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
