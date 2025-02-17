@@ -1,5 +1,5 @@
 import Student from "../models/studentSchema.js";
-import { createPatientService } from "../services/patientCase/CreatePatientService.js";
+import { createPatientService } from "../services/patientCase/createPatientService.js";
 import { fetchAllPatientsService } from "../services/patientCase/fetchAllPatientsService.js";
 import { fetchPatientByIdService } from "../services/patientCase/fetchPatientByIdService.js";
 import { searchPatientsService } from "../services/patientCase/searchPatientsService.js";
