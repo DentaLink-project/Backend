@@ -5,7 +5,7 @@ export const forgotPassword = async (email) => {
     try {
         const student = await Student.findOne({ email });
         if (!student) {
-            return { message: 'Student not found' };
+            throw new Error('Student not found');
         }
         const OTP = Math.floor(1000 + Math.random() * 9000).toString();
         const expiresAt = new Date(Date.now() + 15 * 60 * 1000);

@@ -6,7 +6,7 @@ export const resetPassword = async ({ email, newPassword }) => {
     try {
         const student = await Student.findOne({ email });
         if (!student) {
-            return { message: 'Student not found' };
+            throw new Error('Student not found');
         }
 
         student.password = await hashPassword(newPassword);

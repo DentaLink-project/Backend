@@ -4,11 +4,11 @@ export const verifyOTP = async ({ email, OTP }) => {
     try {
         const student = await Student.findOne({ email });
         if (!student) {
-            return { message: 'Student not found' };
+            throw new Error('Student not found');
         }
 
         if (student.otpCode !== OTP || student.otpExpiresAt < new Date()) {
-            return { message: 'Invalid or expired OTP' };
+            throw new Error('Invalid or expired OTP' );
         }
 
         return { message: 'OTP verified successfully' };
