@@ -8,7 +8,7 @@ import { resetPassword } from "../services/resetPasswordService.js";
 export const signupController = async (req, res, next) => {
     try {
         const { name, email, password, phone, role, academicYear, universityID } = req.body;
-        const file = req.file;
+        const idPicture = [req.file];
 
         const newStudent = await signUpStudent({
             name,
@@ -18,7 +18,7 @@ export const signupController = async (req, res, next) => {
             role,
             academicYear,
             universityID,
-            file,
+            idPicture,
         });
 
         const token = generateToken(newStudent._id);
