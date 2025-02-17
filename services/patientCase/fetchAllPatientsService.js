@@ -1,15 +1,15 @@
 import Patient from "../../models/patientCaseSchema.js";
 
-export const getAllPatients = async (user) => {
+export const fetchAllPatientsService = async (user) => {
     try {
-        const patients = await Patient.find().populate("createdBy", "name email -role");
+        const allPatients = await Patient.find().populate("createdBy", "name email -role");
 
-        const patientsWithFavStatus = patients.map(patient => ({
+        const patientsWithFavoriteStatus = allPatients.map(patient => ({
             ...patient._doc,
             isFavPatient: user.favorites.some(fav => fav.toString() === patient._id.toString()),
         }));
 
-        return patientsWithFavStatus;
+        return patientsWithFavoriteStatus;
     } catch (error) {
         throw new Error(error.message);
     }

@@ -1,17 +1,16 @@
 import Student from "../models/studentSchema.js";
-import {addPatient} from "../services/patientCase/addPatientServices.js"
-import { getAllPatients } from "../services/patientCase/getAllPatientServices.js";
-import { getPatientById} from "../services/patientCase/getPatientByIdServices.js";
-import { getPatientByTitle } from "../services/patientCase/getPatientByTitle.js";
-import toggleFavorite from "../services/patientCase/toggleFavouritePatient.js";
+import { createPatientService } from "../services/patientCase/CreatePatientService.js";
+import { fetchAllPatientsService } from "../services/patientCase/fetchAllPatientsService.js";
+import { fetchPatientByIdService } from "../services/patientCase/fetchPatientByIdService.js";
+import { searchPatientsService } from "../services/patientCase/searchPatientsService.js";
+import { toggleFavouritePatientService } from "../services/patientCase/toggleFavouritePatientService.js";
 
-//=============================**createPatient**===================================
 export const createPatient = async (req, res) => {
     try {
         const { name, title, age, gender, phone, category, location, description } = req.body;
-        const files = req.files;
+        const images = req.files;
 
-        const patient = await addPatient({
+        const patient = await createPatientService({
             name,
             title,
             age,
@@ -20,7 +19,7 @@ export const createPatient = async (req, res) => {
             category,
             location,
             description,
-            files, 
+            images, 
             createdBy: req.student.id
         });
 
@@ -30,33 +29,31 @@ export const createPatient = async (req, res) => {
     }
 };
 
-//=============================**fetchPatientsByTitle**===================================
-export const fetchPatientsByTitle = async (req, res) => {
+export const searchPatients = async (req, res) => {
     try {
         const { title } = req.query;
         if (!title) {
             return res.status(400).json({ message: "Title is required for search" });
         }
-        const patients = await getPatientByTitle(title);
+        const patients = await searchPatientsService(title);
         res.status(200).json(patients);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
 };
-//=============================**fetchPatientById**===================================
+
 export const fetchPatientById = async (req, res) => {
     try {
         const { id } = req.params;
         const studentId = req.student._id; 
 
-        const patient = await getPatientById(id, studentId);
+        const patient = await fetchPatientByIdService(id, studentId);
         
         res.status(200).json(patient);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
 };
-//=============================**fetchAllPatients**===================================
 
 export const fetchAllPatients = async (req, res) => {
     try {
@@ -65,22 +62,22 @@ export const fetchAllPatients = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
-        const patients = await getAllPatients(user); 
+        const patients = await fetchAllPatientsService(user); 
         res.status(200).json(patients);
     } catch (error) {
         res.status(500).json({ message: "Failed to fetch patients", error: error.message });
     }
 };
 
-//==============================**toggleFavorite**===================================
-export const toggleFavoriteController = async (req, res) => {
+export const toggleFavouritePatient = async (req, res) => {
     try {
         const studentId = req.student._id; 
         const { patientId } = req.body;
+
         if (!patientId) {
-        return res.status(400).json({ message: "Patient ID is required" });
+            return res.status(400).json({ message: "Patient ID is required" });
         }
-            const result = await toggleFavorite(studentId, patientId);
+            const result = await toggleFavouritePatientService(studentId, patientId);
             res.status(200).json({ success: true, message: result });
     } catch (error) {
         console.error("Error in toggleFavoriteController:", error);

@@ -1,13 +1,13 @@
 import Patient from "../../models/patientCaseSchema.js";
 import { uploadImage } from "../imageService.js";
 
-export const addPatient = async ({ name, title, age, gender, phone, category, description, location, files, createdBy }) => {
+export const createPatientService = async ({ name, title, age, gender, phone, category, description, location, images, createdBy }) => {
     try {
-        if (!files || files.length === 0) {
+        if (!images || images.length === 0) {
             throw new Error("At least one image is required");
         }
 
-        const imageUrls = await uploadImage(files);
+        const uploadedImageUrls = await uploadImage(images);
 
         const patient = await Patient.create({
             name,
@@ -18,7 +18,7 @@ export const addPatient = async ({ name, title, age, gender, phone, category, de
             category,
             description,
             location,
-            file: imageUrls, 
+            images: uploadedImageUrls, 
             createdBy
         });
 
