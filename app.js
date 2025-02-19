@@ -1,7 +1,11 @@
 import express from 'express';
 import database from './db.js';
 import dotenv from 'dotenv';
+import bodyParser from 'body-parser';
 import cors from 'cors';
+import swaggerDocs from './swaggerConfig.js';
+import userRoutes from './routes/userRoutes.js';
+import toolRoutes from "./routes/toolRoutes.js"; 
 
 dotenv.config();
 
@@ -14,6 +18,13 @@ app.use(cors({
     preflightContinue: false,
     optionsSuccessStatus: 204
 }));
+
+app.use(bodyParser.json());
+
+app.use('/api', userRoutes);
+app.use('/api' , toolRoutes);
+
+swaggerDocs(app);
 
 async function startServer() {
     try {
