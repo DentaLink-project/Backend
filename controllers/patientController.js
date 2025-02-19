@@ -101,3 +101,11 @@ export const fetchPatientsByCategory = async (req, res) => {
     }
 };
 
+export const fetchLatestPatients = async (req, res) => {
+    try {
+        const latestPatients = await fetchLatestPatientsService();
+        res.status(200).json(latestPatients);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
