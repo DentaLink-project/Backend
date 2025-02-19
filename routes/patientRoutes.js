@@ -1,6 +1,6 @@
 import express from "express";
 import {
-    createPatient, fetchAllPatients, fetchPatientById, searchPatients, toggleFavouritePatient
+    createPatient, fetchAllPatients, fetchLatestPatients, fetchPatientById, fetchPatientsByCategory, searchPatients, toggleFavouritePatient
 } from "../controllers/patientController.js";
 import { upload } from "../services/imageService.js";
 import { patientCaseValidator } from "../utils/validation/patientValidator.js";
@@ -117,6 +117,13 @@ router.post("/toggle", checkAuth, toggleFavouritePatient);
  *         description: Server error
  */
 router.get("/search", checkAuth, searchPatients);
+
+
+
+router.get("/category/:category", checkAuth, fetchPatientsByCategory); 
+router.get("/latest", checkAuth, fetchLatestPatients);
+
+
 
 /**
  * @swagger
