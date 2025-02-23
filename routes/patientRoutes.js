@@ -1,6 +1,6 @@
 import express from "express";
 import {
-    createPatient, fetchAllPatients, fetchLatestPatients, fetchPatientById, fetchPatientsByCategory, searchPatients, toggleFavouritePatient
+    createPatient, fetchAllPatients, fetchLatestPatients, fetchPatientById, searchPatients, toggleFavouritePatient
 } from "../controllers/patientController.js";
 import { upload } from "../services/imageService.js";
 import { patientCaseValidator } from "../utils/validation/patientValidator.js";
@@ -120,7 +120,6 @@ router.get("/search", checkAuth, searchPatients);
 
 
 
-router.get("/category/:category", checkAuth, fetchPatientsByCategory); 
 router.get("/latest", checkAuth, fetchLatestPatients);
 
 
