@@ -3,7 +3,6 @@ import { createPatientService } from "../services/patientCase/createPatientServi
 import { fetchAllPatientsService } from "../services/patientCase/fetchAllPatientsService.js";
 import { fetchLatestPatientsService } from "../services/patientCase/fetchLatestPatientService.js";
 import { fetchPatientByIdService } from "../services/patientCase/fetchPatientByIdService.js";
-import { fetchPatientsByCategoryService} from "../services/patientCase/fetchRelatedPatientService.js";
 import { searchPatientsService } from "../services/patientCase/searchPatientsService.js";
 import { toggleFavouritePatientService } from "../services/patientCase/toggleFavouritePatientService.js";
 
@@ -86,20 +85,6 @@ export const toggleFavouritePatient = async (req, res) => {
         res.status(500).json({ success: false, message: "Internal server error", error: error.message });
     }
 }
-
-
-export const fetchPatientsByCategory = async (req, res) => {
-    try {
-        const { category } = req.params;          
-        if (!category) {
-            return res.status(400).json({ message: "Category is required" });
-        }
-        const patients = await fetchPatientsByCategoryService(category);
-        res.status(200).json(patients);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
 
 export const fetchLatestPatients = async (req, res) => {
     try {
