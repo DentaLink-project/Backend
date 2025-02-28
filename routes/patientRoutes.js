@@ -118,11 +118,21 @@ router.post("/toggle", checkAuth, toggleFavouritePatient);
  */
 router.get("/search", checkAuth, searchPatients);
 
-
-
+/**
+ * @swagger
+ * /patients/latest:
+ *   get:
+ *     summary: Fetch the latest patient cases
+ *     tags: [Patient]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: A list of the latest patient cases
+ *       500:
+ *         description: Server error
+ */
 router.get("/latest", checkAuth, fetchLatestPatients);
-
-
 
 /**
  * @swagger
