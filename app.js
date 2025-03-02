@@ -2,11 +2,12 @@ import express from 'express';
 import database from './db.js';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
-import bodyParser from 'body-parser';
 import cors from 'cors';
 import swaggerDocs from './swaggerConfig.js';
 import userRoutes from './routes/userRoutes.js';
+import patientRoutes from './routes/patientRoutes.js'
 import toolRoutes from "./routes/toolRoutes.js"; 
+
 
 dotenv.config();
 
@@ -22,7 +23,8 @@ app.use(cors({
 
 app.use(bodyParser.json());
 
-app.use('/api', userRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/patients', patientRoutes);
 app.use('/api' , toolRoutes);
 
 
