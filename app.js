@@ -22,8 +22,7 @@ app.use(cors({
 
 app.use(bodyParser.json());
 
-app.use('/api/users', userRoutes);
-app.use('/api/patients', patientRoutes);
+app.use('/api', userRoutes);
 app.use('/api' , toolRoutes);
 
 
