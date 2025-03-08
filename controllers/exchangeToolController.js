@@ -43,3 +43,16 @@ export const fetchAllExchanges = async (req, res) => {
     }
 };
 
+export const fetchExchangesByToothName = async (req, res) => {
+    try {
+        const { toothName } = req.query; 
+        if (!toothName) {
+            return res.status(400).json({ message: "Tooth name is required for search" });
+        }
+        const exchanges = await getExchangesByToothName(toothName);
+        res.status(200).json(exchanges);
+    } catch (error) {
+        res.status(500).json({ message: "Failed to fetch exchanges", error: error.message });
+    }
+};
+
