@@ -56,3 +56,18 @@ export const fetchExchangesByToothName = async (req, res) => {
     }
 };
 
+export const updateExchangeController = async (req, res) => {
+    try {
+        const studentId = req.student._id;
+        const exchangeId = req.params.id;
+        const updateData = req.body;
+        const files = req.files;  
+
+        const updatedExchange = await updateExchangeService(studentId, exchangeId, updateData, files);
+
+        res.status(200).json({ message: "Exchange updated successfully!", updatedExchange });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
