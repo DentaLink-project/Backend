@@ -71,3 +71,17 @@ export const updateExchangeController = async (req, res) => {
     }
 };
 
+export const toggleFavoriteExchangeController = async (req, res) => {
+    try {
+        const studentId = req.student._id;
+        const { exchangeId } = req.body;
+        if (!exchangeId) {
+            return res.status(400).json({ message: "Exchange ID is required" });
+        }
+
+        const result = await toggleFavoriteExchange(studentId, exchangeId);
+        res.status(200).json({ message: result });
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error", error: error.message });
+    }
+};
