@@ -27,3 +27,19 @@ export const addExchange = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+export const fetchAllExchanges = async (req, res) => {
+    try {
+        const userId = req.student._id;
+        const user = await Student.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const exchanges = await getAllExchanges(user);
+        res.status(200).json(exchanges);
+    } catch (error) {
+        res.status(500).json({ message: "Failed to fetch exchanges", error: error.message });
+    }
+};
+
