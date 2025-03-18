@@ -88,9 +88,14 @@ export const toggleFavouritePatient = async (req, res) => {
 
 export const fetchLatestPatients = async (req, res) => {
     try {
-        const latestPatients = await fetchLatestPatientsService();
-        res.status(200).json(latestPatients);
+        const userId = req.student._id; 
+        const user = await Student.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        const patients = await fetchLatestPatientsService(user); 
+        res.status(200).json(patients);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ message: "Failed to fetch patients", error: error.message });
     }
 };
