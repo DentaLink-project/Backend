@@ -32,11 +32,11 @@ export const createPatient = async (req, res) => {
 
 export const searchPatients = async (req, res) => {
     try {
-        const { title } = req.query;
-        if (!title) {
+        const { query } = req.query;
+        if (!query) {
             return res.status(400).json({ message: "Title is required for search" });
         }
-        const patients = await searchPatientsService(title);
+        const patients = await searchPatientsService(query);
         res.status(200).json(patients);
     } catch (error) {
         res.status(404).json({ message: error.message });
