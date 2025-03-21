@@ -105,7 +105,7 @@ router.post("/toggle", checkAuth, toggleFavouritePatient);
  *       - bearerAuth: []
  *     parameters:
  *       - in: query
- *         name: q
+ *         name: query
  *         schema:
  *           type: string
  *         required: true

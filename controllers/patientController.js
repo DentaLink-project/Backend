@@ -34,7 +34,7 @@ export const searchPatients = async (req, res) => {
     try {
         const { query } = req.query;
         if (!query) {
-            return res.status(400).json({ message: "Title is required for search" });
+            return res.status(400).json({ message: "Query is required for search" });
         }
         const patients = await searchPatientsService(query);
         res.status(200).json(patients);
