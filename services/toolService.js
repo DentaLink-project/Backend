@@ -1,5 +1,5 @@
-import { uploadImage } from './imageService.js';
-import Tool from '../models/toolSchema.js';
+import { uploadImage } from '../imageService.js';
+import Tool from '../../models/toolSchema.js';
 
 
 export const addToolService = async ({ toolName, price, description, category, images ,createdBy }) => {
