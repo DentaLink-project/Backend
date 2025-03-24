@@ -1,14 +1,10 @@
-import { addToolService} from './../services/toolService.js';
-import { getAllTools } from './../services/getAllToolsService.js';
-import {getToolById} from './../services/getSingleToolService.js';
-import { getToolsByStudentId } from "./../services/getAllToolsService.js";
-import {searchTools} from './../services/searchToolsService.js';
-import { deleteTool } from './../services/deleteToolService.js';
-import { addReview, getReviews } from './../services/reviewService.js';
-import {addToolInFavorite} from './../services/addToolFavoriteServices.js';
-import {getToolFavorite} from './../services/getAllToolFavorite.js';
-import {getLatestTools} from './../services/getLatestToolsServices.js';
-import Tool from "./../models/toolSchema.js";
+import { addToolService} from '../services/toolCase/toolService.js';
+import { getAllTools } from '../services/toolCase/getAllToolsService.js';
+import {searchTools} from '../../services/toolCase/searchToolsService.js';
+import { addReview } from '../../services/toolCase/reviewService.js';
+import {getRelatedTools} from '../../services/toolCase/relatedToolService.js'
+import {favoriteToolServices} from '../../services/toolCase/ToolFavorit.js';
+import {getLatestTools} from '../../services/toolCase/getLatestToolsServices.js';
 
 
 export const addToolController = async (req, res) => {
@@ -39,99 +35,45 @@ export const getAllToolsController = async (req, res) => {
     }
 };
 
-export const getToolByIdController = async (req, res) => {
-    try {
-        const { toolId } = req.params; 
-        const tool = await getToolById(toolId); 
-        res.status(200).json({ tool });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-};
 
 
-export const getToolsByStudentIdController = async (req, res) => {
-    try {
-        const studentId = req.user._id; 
-        const tools = await getToolsByStudentId(studentId);
-        res.status(200).json({ tools });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-};
 
-export const addToolInFavoriteController = async (req, res) => {
-    try {
-        const studentId = req.student._id; 
-        const { toolId } = req.params; 
-
-        const favorites = await addToolInFavorite(studentId, toolId);
-
-        res.status(200).json({ message: "Tool added to favorites successfully", favorites });
-    } catch (err) {
-        console.error("Error in addToolInFavoriteController:", err);
-        res.status(500).json({ message: err.message || "Server error" });
-    }
-};
-
-export const getToolFavoriteController = async (req, res) => {
-    try {
-        const studentId = req.student._id; 
-
-        const favorites = await getToolFavorite(studentId);
-
-        res.status(200).json({ favorites });
-    } catch (err) {
-        console.error("Error in getToolFavoriteController:", err);
-        res.status(500).json({ message: err.message || "Server error" });
-    }
-};
 
 export const searchToolsController = async (req, res) => {
     try {
-        const { title } = req.query; 
-        if (!title) {
-            return res.status(400).json({ message: "Title is required for search" });
+        const { title } = req.query;
+        if (!title || title.trim() === "") {
+            return res.status(400).json({ message: "Search term is required" });
         }
 
-        const tools = await searchTools(title); 
-        res.status(200).json(tools); 
+        const tools = await searchTools(title);
+        if (tools.length === 0) {
+            return res.status(404).json({ message: "No tools found matching your search" });
+        }
+
+        res.status(200).json(tools);
     } catch (error) {
-        res.status(404).json({ message: error.message }); 
+        res.status(500).json({ message: "Server error: " + error.message });
     }
 };
 
-
-
-export const deleteToolController = async (req, res) => {
-    try {
-        const { toolId } = req.params; 
-        const deletedTool = await deleteTool(toolId); 
-        res.status(200).json({ message: "Tool deleted successfully", deletedTool });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-};
 
 
 export const getRelatedToolsController = async (req, res) => {
     try {
-        const { toolId } = req.params; 
-        const tool = await Tool.findById(toolId); 
+    const { category, toolId } = req.query;
 
-        if (!tool) {
-            return res.status(404).json({ message: "Tool not found" });
-        }
+    if (!category && !toolId) {
+        return res.status(400).json({ message: "Either category or toolId must be provided" });
+    }
 
-        const relatedTools = await Tool.find({
-            category: tool.category, 
-            _id: { $ne: toolId } 
-        }).limit(5); 
-
-        res.status(200).json({ relatedTools });
+    const identifier = toolId || category;
+    const relatedTools = await getRelatedTools(identifier);
+    
+    res.status(200).json({ relatedTools });
     } catch (err) {
-        console.error('Error in getRelatedToolsController:', err);
-        res.status(500).json({ message: "Server error" });
+    const status = err.message === "Tool not found" ? 404 : 500;
+    res.status(status).json({ message: err.message });
     }
 };
 
@@ -152,19 +94,6 @@ export const addReviewController = async (req, res) => {
     }
 };
 
-export const getReviewsController = async (req, res) => {
-    try {
-        const { toolId } = req.params; 
-
-        const reviews = await getReviews(toolId);
-
-        res.status(200).json({ reviews });
-    } catch (err) {
-        console.error('Error in getReviewsController:', err);
-        res.status(500).json({ message: "Server error" });
-    }
-};
-
 
 export const getLatestToolsController = async (req, res) => {
     try {
@@ -177,4 +106,19 @@ export const getLatestToolsController = async (req, res) => {
 };
 
 
+export const favoriteToolController = async (req, res) => {
+    try {
+        const studentId = req.student._id; 
+        const { toolId } = req.body;
+
+        if (!toolId) {
+            return res.status(400).json({ message: "Tool ID is required" });
+        }
+            const result = await favoriteToolServices(studentId, toolId);
+            res.status(200).json({ success: true, message: result });
+    } catch (error) {
+        console.error("Error in favoriteToolController:", error);
+        res.status(500).json({ success: false, message: "Internal server error", error: error.message });
+    }
+}
 

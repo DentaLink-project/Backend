@@ -32,11 +32,11 @@ export const createPatient = async (req, res) => {
 
 export const searchPatients = async (req, res) => {
     try {
-        const { title } = req.query;
-        if (!title) {
-            return res.status(400).json({ message: "Title is required for search" });
+        const { query } = req.query;
+        if (!query) {
+            return res.status(400).json({ message: "Query is required for search" });
         }
-        const patients = await searchPatientsService(title);
+        const patients = await searchPatientsService(query);
         res.status(200).json(patients);
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -88,9 +88,14 @@ export const toggleFavouritePatient = async (req, res) => {
 
 export const fetchLatestPatients = async (req, res) => {
     try {
-        const latestPatients = await fetchLatestPatientsService();
-        res.status(200).json(latestPatients);
+        const userId = req.student._id; 
+        const user = await Student.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        const patients = await fetchLatestPatientsService(user); 
+        res.status(200).json(patients);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ message: "Failed to fetch patients", error: error.message });
     }
 };

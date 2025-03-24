@@ -1,11 +1,11 @@
 import Patient from "../../models/patientCaseSchema.js";
 
-export const searchPatientsService = async (title) => {
+export const searchPatientsService = async (query) => {
     try {
-        const searchResults = await Patient.find({ $text: { $search: title } });
+        const searchResults = await Patient.find({ $text: { $search: query } });
 
         if (!searchResults.length) {
-            throw new Error("No patients found with this title");
+            throw new Error("No results found for your search");
         }
 
         return searchResults;

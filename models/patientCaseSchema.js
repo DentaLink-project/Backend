@@ -14,7 +14,13 @@ Schema({
 
 }, { timestamps: true });
 
-patientSchema.index({ title: "text" });
+patientSchema.index({ 
+    title: "text", 
+    description: "text", 
+    name: "text", 
+    category: "text", 
+    location: "text" 
+});
 
 
 const Patient = mongoose.model("Patient", patientSchema);
