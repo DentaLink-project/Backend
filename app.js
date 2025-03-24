@@ -25,8 +25,7 @@ app.use(bodyParser.json());
 
 app.use('/api/users', userRoutes);
 app.use('/api/patients', patientRoutes);
-app.use('/api' , toolRoutes);
-
+app.use('/api/tools' , toolRoutes);
 
 
 swaggerDocs(app);
