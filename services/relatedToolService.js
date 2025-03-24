@@ -1,26 +1,22 @@
-/*import Tool from "../models/toolSchema.js";
+import Tool from "../models/toolSchema.js";
+import mongoose from "mongoose";
 
-export const relatedTools = async (toolId) => {
-    try {
-        const currentTool = await Tool.findById(toolId);
-        if (!currentTool) {
-            throw new Error("Tool not found");
-        }
-
-        const rTools= await Tool.find({
-            category: currentTool.category, 
-            _id: { $ne: toolId } 
-        });
-
-        if (!rTools.length) {
-            throw new Error("No related tools found");
-        }
-
-        return rTools;
-    } catch (error) {
-        console.error('Error in relatedTools:', error);
-        throw new Error('Failed to fetch related tools');
+export const getRelatedTools = async (identifier) => {
+    const isId = mongoose.Types.ObjectId.isValid(identifier);
+    
+    let category;
+    if (isId) {
+        const tool = await Tool.findById(identifier);
+        if (!tool) throw new Error("Tool not found");
+        category = tool.category;
+    } else {
+        category = identifier;
     }
-};
 
-export default relatedTools ;*/
+    return await Tool.find({
+        category: category,
+        ...(isId && { _id: { $ne: identifier } }) 
+    })
+    .select('toolName price images category')
+    .limit(5);
+    };
