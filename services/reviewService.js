@@ -1,6 +1,5 @@
 import Tool from '../models/toolSchema.js';
 
-
 export const addReview = async (toolId, userId, description, rating) => {
     const tool = await Tool.findById(toolId);
     if (!tool) {
@@ -17,15 +16,3 @@ export const addReview = async (toolId, userId, description, rating) => {
 };
 
 
-export const getReviews = async (toolId) => {
-    const tool = await Tool.findById(toolId).populate({
-        path: 'reviews.user',
-        select: 'name' 
-    });
-
-    if (!tool) {
-        throw new Error("Tool not found");
-    }
-
-    return tool.reviews;
-};
