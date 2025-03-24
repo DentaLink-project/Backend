@@ -12,15 +12,12 @@ const toolSchema= new mongoose.Schema({
     description: { type: String, required: true },
     category: { type: String, required: true },
     addedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'student', required: true },
-    images: { type: String, required: true },
+    images: { type: [String], required: true },
     reviews: { type: [reviewSchema], default: [] },
-    /*isFavourite: { type: Boolean, default: false },*/
-    favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tool" }]
+    isFavourite: { type: Boolean, default: false }
 }, { timestamps: true });
 
-
-
-
+toolSchema.index({title:"text"});
 
 
 
