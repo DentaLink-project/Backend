@@ -1,10 +1,11 @@
-import { addToolService} from '../services/toolCase/toolService.js';
-import { getAllTools } from '../services/toolCase/getAllToolsService.js';
-import {searchTools} from '../../services/toolCase/searchToolsService.js';
-import { addReview } from '../../services/toolCase/reviewService.js';
-import {getRelatedTools} from '../../services/toolCase/relatedToolService.js'
-import {favoriteToolServices} from '../../services/toolCase/ToolFavorit.js';
-import {getLatestTools} from '../../services/toolCase/getLatestToolsServices.js';
+import { addToolService} from './services/toolService.js';
+import { getAllTools } from './services/getAllToolsService.js';
+import {searchTools} from './../services/searchToolsService.js';
+import { addReview } from './../services/reviewService.js';
+import {getRelatedTools} from './../services/relatedToolService.js'
+import {favoriteToolServices} from './../services/ToolFavorit.js';
+import {getLatestTools} from './../services/getLatestToolsServices.js';
+
 
 
 export const addToolController = async (req, res) => {
