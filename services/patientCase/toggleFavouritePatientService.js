@@ -7,15 +7,15 @@ export const toggleFavouritePatientService = async (studentId, patientId) => {
             throw new Error("Student not found");
         }
 
-        if (foundStudent.favorites.includes(patientId)) {
-            foundStudent.favorites = foundStudent.favorites.filter(
+        if (foundStudent.favoritePatients.includes(patientId)) {
+            foundStudent.favoritePatients = foundStudent.favoritePatients.filter(
                 (favId) => favId.toString() !== patientId
             );
             await foundStudent.save();
 
             return "Patient removed from favorites";
         } else {
-            foundStudent.favorites.push(patientId);
+            foundStudent.favoritePatients.push(patientId);
             await foundStudent.save();
 
             return "Patient added to favorites";

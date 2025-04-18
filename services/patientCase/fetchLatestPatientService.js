@@ -9,7 +9,7 @@ export const fetchLatestPatientsService = async (user) => {
 
         const patientsWithFavoriteStatus = latestPatients.map(patient => ({
             ...patient._doc,
-            isFavPatient: user.favorites.some(fav => fav.toString() === patient._id.toString()),
+            isFavPatient: user.favoritePatients.some(fav => fav.toString() === patient._id.toString()),
         }));
 
         return patientsWithFavoriteStatus;

@@ -10,7 +10,7 @@ export const searchPatientsService = async (query, user) => {
 
         const searchResultsWithFavorite = searchResults.map(patient => ({
             ...patient._doc,
-            isFavPatient: user.favorites.some(fav => fav.toString() === patient._id.toString()),
+            isFavPatient: user.favoritePatients.some(fav => fav.toString() === patient._id.toString()),
         }));
 
         return searchResultsWithFavorite;
