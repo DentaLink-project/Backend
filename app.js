@@ -7,6 +7,7 @@ import swaggerDocs from './swaggerConfig.js';
 import userRoutes from './routes/userRoutes.js';
 import patientRoutes from './routes/patientRoutes.js';
 import toolRoutes from './routes/toolRoutes.js';
+import exchangeRout from './routes/exchangeRoutes.js'
 
 
 dotenv.config();
@@ -26,6 +27,8 @@ app.use(bodyParser.json());
 app.use('/api/users', userRoutes);
 app.use('/api/patients', patientRoutes);
 app.use('/api/tools', toolRoutes);
+app.use('/api/exchanges', exchangeRout)
+
 
 
 swaggerDocs(app);

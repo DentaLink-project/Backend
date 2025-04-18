@@ -9,6 +9,7 @@ const studentSchema = new mongoose.Schema({
     tools: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tool' }],
     favoritePatients: [{ type: mongoose.Schema.Types.ObjectId, ref: "Patient" }],
     favoriteTools: [{type: mongoose.Schema.Types.ObjectId, ref: "Tool"}],
+    favoritesExchanges: [{ type: mongoose.Schema.Types.ObjectId, ref: "Exchange" }], 
     otpCode: { type: String },
     otpExpiresAt: { type: Date }
 }, { timestamps: true })
