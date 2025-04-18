@@ -2,12 +2,12 @@ import Exchange from "../../models/exchangeSchema.js";
 import { uploadImage } from "../imageService.js";
 
 
-export const addExchangeService = async ({ name, toothName, exchangeWith, notes, contact, files, studentId }) => {
+export const addExchangeService = async ({ name, toothName, exchangeWith, notes, contact, files, createdBy }) => {
     const images = files.length ? await uploadImage(files) : [];
 
     const newExchange = new Exchange({
         name,
-        publisher: studentId,
+        createdBy,
         toothName,
         exchangeWith,
         notes,

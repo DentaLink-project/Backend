@@ -1,17 +1,17 @@
 import express from "express";
 import { checkAuth } from "../middleware/checkAuth.js";
-import * as EC from "../controllers/exchangeToolController.js";
 import { upload } from "../services/imageService.js";
 import { exchangeValidator } from "../utils/validation/exchangeToolValidation.js";
+import { addExchange, fetchAllExchanges, searchExchanges, toggleFavoriteExchangeController, updateExchangeController } from "../controllers/exchangeTeethController.js";
 
 
 const router = express.Router();
 
-router.post("/add", checkAuth, upload.array("images"),exchangeValidator, EC.addExchange); 
-router.get("/" ,checkAuth, EC.fetchAllExchanges)
-router.get("/search",checkAuth, EC.fetchExchangesByToothName)
-router.post("/toggle", checkAuth, EC.toggleFavoriteExchangeController);
-router.put("/update/:id", checkAuth, upload.array("images"),exchangeValidator, EC.updateExchangeController);
+router.post("/add", checkAuth, upload.array("images"),exchangeValidator, addExchange); 
+router.get("/" ,checkAuth, fetchAllExchanges)
+router.get("/search",checkAuth, searchExchanges)
+router.post("/toggle", checkAuth, toggleFavoriteExchangeController);
+router.put("/update/:id", checkAuth, upload.array("images"), updateExchangeController);
 
 
 

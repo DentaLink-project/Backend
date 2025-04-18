@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const exchangeSchema = new mongoose.Schema({
-    publisher: { 
+    createdBy: { 
         type: mongoose.Schema.Types.ObjectId, 
         ref: "Student", 
         required: true

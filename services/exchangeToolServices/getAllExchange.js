@@ -4,7 +4,7 @@ import Exchange from "../../models/exchangeSchema.js";
 
 export const getAllExchanges = async (user) => {
     try {
-        const exchanges = await Exchange.find().populate("publisher", "name email -role");
+        const exchanges = await Exchange.find().populate("createdBy", "name email -role");
 
         const exchangesWithFavStatus = exchanges.map(exchange => ({
             ...exchange._doc,
