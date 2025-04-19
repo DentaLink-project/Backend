@@ -23,3 +23,14 @@ export const fetchPatientsByUser = async (req, res) => {
     }
 };
 
+//============================**fetchFavouritePatients**======================
+export const fetchFavoritePatients = async (req, res) => {
+    try {
+        const studentId = req.student._id;
+        const favoritePatients = await getFavoritePatients(studentId);
+        res.status(200).json(favoritePatients);
+    } catch (error) {
+        res.status(500).json({ message: "Failed to fetch favorites", error: error.message });
+    }
+};
+
