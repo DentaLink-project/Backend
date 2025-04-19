@@ -90,3 +90,14 @@ export const deleteExchange = async (req, res) => {
     }
 };
 
+//==============================**fetchFavoriteExchanges**===================================
+export const fetchFavoriteExchanges = async (req, res) => {
+    try {
+        const studentId = req.student._id; 
+        const favoriteExchanges = await getFavoriteExchanges(studentId);
+        
+        res.status(200).json(favoriteExchanges);
+    } catch (error) {
+        res.status(500).json({ message: "Failed to fetch favorite exchanges", error: error.message });
+    }
+};
