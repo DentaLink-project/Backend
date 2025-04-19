@@ -76,3 +76,17 @@ export const fetchExchangesByUser = async (req, res) => {
     }
 };
 
+//============================**deleteExchange********************************
+export const deleteExchange = async (req, res) => {
+    try {
+        const exchangeId = req.params.id;
+        const studentId = req.student._id; 
+
+        const result = await deleteExchangeService(exchangeId, studentId);
+
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
