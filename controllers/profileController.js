@@ -64,3 +64,15 @@ export const deletePatient = async (req, res) => {
     }
 };
 
+//==============================**getExchangeByUser**===================================
+export const fetchExchangesByUser = async (req, res) => {
+    try {
+        const studentId = req.student._id; 
+
+        const exchanges = await getExchangesByUser(studentId);
+        res.status(200).json(exchanges);
+    } catch (error) {
+        res.status(500).json({ message: "Failed to fetch exchanges", error: error.message });
+    }
+};
+
