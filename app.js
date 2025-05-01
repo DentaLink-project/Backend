@@ -12,6 +12,7 @@ import adminRoutes from './routes/adminRoutes.js';
 import storeRoutes from './routes/storeRoutes.js';
 import profileRoutes from './routes/profileRoutes.js'
 import cartRoutes from './routes/cartRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
 
 dotenv.config();
 
@@ -35,6 +36,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/store', storeRoutes);
 app.use('/api/profiles' , profileRoutes)
 app.use("/api/carts", cartRoutes);
+app.use("/api/orders", orderRoutes);
 
 
 
