@@ -10,6 +10,7 @@ import {
     deletePatient,
     fetchExchanges,
     deleteExchange,
+    fetchOrders,
 } from '../controllers/profileController.js';
 import { upload } from '../services/imageService.js';
 
@@ -160,6 +161,60 @@ router.get("/exchanges/my-exchanges", checkAuth, fetchExchanges);
  *         description: User not found
  */
 router.get("/patients/my-patients", checkAuth, fetchPatient);
+
+/**
+ * @swagger
+ * /profile/orders/my-orders:
+ *   get:
+ *     summary: Get user's orders
+ *     description: Retrieve all orders made by the current user
+ *     tags: [Profile]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Orders retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                       items:
+ *                         type: array
+ *                         items:
+ *                           type: object
+ *                           properties:
+ *                             tool:
+ *                               type: object
+ *                               properties:
+ *                                 toolName:
+ *                                   type: string
+ *                                 price:
+ *                                   type: number
+ *                                 images:
+ *                                   type: array
+ *                                   items:
+ *                                     type: string
+ *                             quantity:
+ *                               type: number
+ *                       totalPrice:
+ *                         type: number
+ *                       createdAt:
+ *                         type: string
+ *                         format: date-time
+ *       401:
+ *         description: Unauthorized - Invalid or missing token
+ */
+router.get('/orders/my-orders', checkAuth, fetchOrders);
 
 /**
  * @swagger

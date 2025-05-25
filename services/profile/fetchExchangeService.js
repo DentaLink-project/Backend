@@ -8,7 +8,7 @@ export const fetchExchangeService = async (studentId) => {
         if (!student) {
             throw new Error("Student not found");
         }
-        const exchanges = await Exchange.find({ publisher: studentId }).populate("publisher", "name email");
+        const exchanges = await Exchange.find({ createdBy: studentId }).populate("createdBy", "name email");
         const exchangesWithFavStatus = exchanges.map(exchange => ({
             ...exchange._doc,
             isFavExchange: student.favoritesExchanges.some(fav => fav.toString() === exchange._id.toString()),

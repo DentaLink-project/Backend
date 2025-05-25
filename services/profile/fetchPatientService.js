@@ -1,12 +1,14 @@
 import Patient from "../../models/patientCaseSchema.js";
+import Student from "../../models/studentSchema.js";
 
-export const fetchPatientService = async (user) => {
+export const fetchPatientService = async (studentId) => {
     try {
-        const patients = await Patient.find({ createdBy: user._id })
+        const student = await Student.findById(studentId);
+        const patients = await Patient.find({ createdBy: student._id })
             .populate("createdBy", "name email");
         const patientsWithFavStatus = patients.map(patient => ({
             ...patient._doc,
-            isFavPatient: user.favorites.some(fav => fav.toString() === patient._id.toString()),
+            isFavPatient: student.favoritePatients.some(fav => fav.toString() === patient._id.toString()),
         }));
 
         return patientsWithFavStatus;
