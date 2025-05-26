@@ -16,10 +16,13 @@ export const checkoutCartService = async (studentId, paymentDetails) => {
             throw new Error("Failed to create payment intent");
         }
 
+        const orderNumber = `ORD-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+
         const order = new Order({
             student: studentId,
             items: cart.items,
             totalPrice: cart.totalPrice,
+            orderNumber: orderNumber
         });
         await order.save();
 
@@ -29,6 +32,7 @@ export const checkoutCartService = async (studentId, paymentDetails) => {
 
         return {
             orderId: order._id,
+            orderNumber: order.orderNumber,
             clientSecret: paymentResult.clientSecret,
             amount: paymentResult.amount,
             currency: paymentResult.currency
