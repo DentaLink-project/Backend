@@ -308,7 +308,7 @@ router.put("/patients/:id", checkAuth, upload.array("images"), updatePatient);
 
 /**
  * @swagger
- * /profile/{toolId}:
+ * /profile/tools/{toolId}:
  *   delete:
  *     summary: Delete a tool
  *     description: Delete a tool created by the current user
@@ -330,7 +330,7 @@ router.put("/patients/:id", checkAuth, upload.array("images"), updatePatient);
  *       404:
  *         description: Tool not found or not authorized
  */
-router.delete('/:toolId', checkAuth, deleteTool);
+router.delete('/tools/:toolId', checkAuth, deleteTool);
 
 /**
  * @swagger
