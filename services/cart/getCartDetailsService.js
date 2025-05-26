@@ -4,7 +4,7 @@ export const getCartDetailsService = async (studentId) => {
     try {
         const cart = await Cart.findOne({ student: studentId }).populate({
             path: "items.tool",
-            select: "toolName price images"
+            select: "toolName price description images"
         });
 
         if (!cart) throw new Error("Cart not found");

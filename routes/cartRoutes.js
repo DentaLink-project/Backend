@@ -36,6 +36,8 @@ const router = express.Router();
  *                         properties:
  *                           toolName:
  *                             type: string
+ *                           description:
+ *                             type: string
  *                           price:
  *                             type: number
  *                           images:
