@@ -21,11 +21,10 @@ const router = express.Router();
  *           schema:
  *             type: object
  *             properties:
- *               images:
- *                 type: array
- *                 items:
- *                   type: string
- *                   format: binary
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *                 description: Tool image
  *               name:
  *                 type: string
  *               description:
@@ -38,7 +37,7 @@ const router = express.Router();
  *       401:
  *         description: Unauthorized
  */
-router.post("/add", checkAuth, upload.array('images'), toolValidator, createTool);
+router.post("/add", checkAuth, upload.single('image'), toolValidator, createTool);
 
 /**
  * @swagger

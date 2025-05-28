@@ -12,6 +12,7 @@ import adminRoutes from './routes/adminRoutes.js';
 import storeRoutes from './routes/storeRoutes.js';
 import profileRoutes from './routes/profileRoutes.js';
 import cartRoutes from './routes/cartRoutes.js';
+import aiToolRoutes from './routes/aiToolRoutes.js';
 
 
 dotenv.config();
@@ -36,6 +37,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/store', storeRoutes);
 app.use('/api/profile', profileRoutes); 
 app.use('/api/cart', cartRoutes);
+app.use('/api/ai-tool', aiToolRoutes);
 
 
 

@@ -11,7 +11,11 @@ import { toggleFavouriteToolService } from "../services/tools/toggleFavoriteTool
 export const createTool = async (req, res) => {
     try {
         const { toolName, price, description, category, reviews } = req.body;
-        const images = req.files;
+        const image = req.file;
+
+        if (!image) {
+            return res.status(400).json({ message: "Image is required" });
+        }
 
         const tool = await createToolService({
             toolName,
@@ -19,7 +23,7 @@ export const createTool = async (req, res) => {
             description,
             category,
             reviews,
-            images,
+            image,
             createdBy: req.student.id
         });
         res.status(201).json({ message: "Tool added successfully", tool });
