@@ -9,8 +9,10 @@ dotenv.config();
 const AI_API_URL = process.env.AI_API_URL;
 
 const convertImageForAI = (base64Image) => {
-    const base64Data = base64Image.replace(/^data:image\/\w+;base64,/, '');
-    return `data:image/jpeg;base64,${base64Data}`;
+    if (!base64Image) {
+        throw new Error('No image data received from AI service');
+    }
+    return base64Image;
 };
 
 export const analyzeDentalImage = async (imageFile, studentId, userMessage, chatId = null) => {
@@ -30,11 +32,16 @@ export const analyzeDentalImage = async (imageFile, studentId, userMessage, chat
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
-                timeout: 30000
+                timeout: 30000,
+                responseType: 'text' // Expect text response instead of JSON
             });
 
+            if (!response.data) {
+                throw new Error('No response received from AI service');
+            }
+
             imageAnalysis = {
-                annotatedImage: convertImageForAI(response.data.annotated_image_base64)
+                annotatedImage: convertImageForAI(response.data)
             };
         }
 
@@ -64,7 +71,6 @@ export const analyzeDentalImage = async (imageFile, studentId, userMessage, chat
         }
 
         chat.messages.push(userMessageObj);
-
         chat.messages.push({
             role: 'assistant',
             content: geminiResponse
@@ -80,7 +86,8 @@ export const analyzeDentalImage = async (imageFile, studentId, userMessage, chat
             }
         };
     } catch (error) {
-        throw new Error(error.message);
+        console.error('Error in analyzeDentalImage:', error);
+        throw new Error(error.response?.data || error.message || 'Failed to analyze dental image');
     }
 };
 
