@@ -31,7 +31,7 @@ const compressImageForAI = async (buffer) => {
     }
 };
 
-export const analyzeDentalImage = async (imageFile, studentId, userMessage, chatId = null) => {
+export const analyzeDentalImage = async (imageFile, studentId, userMessage, chatId = null, previousMessage = null) => {
     try {
         let imageUrl = null;
         let imageAnalysis = null;
@@ -63,7 +63,7 @@ export const analyzeDentalImage = async (imageFile, studentId, userMessage, chat
             };
         }
 
-        const geminiResponse = await analyzeWithGemini(imageAnalysis, userMessage);
+        const geminiResponse = await analyzeWithGemini(imageAnalysis, userMessage, previousMessage);
 
         let chat;
         if (chatId) {

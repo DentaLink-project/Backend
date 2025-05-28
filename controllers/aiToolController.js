@@ -1,4 +1,5 @@
 import { analyzeDentalImage, getChats, getChatMessages, deleteChat } from '../services/aiTool/aiToolService.js';
+import Chat from '../models/chatSchema.js';
 
 export const analyzeImage = async (req, res) => {
     try {
@@ -11,11 +12,27 @@ export const analyzeImage = async (req, res) => {
             });
         }
 
+        // Get the previous message from the chat if it exists
+        let previousMessage = null;
+        if (chatId) {
+            const chat = await Chat.findById(chatId);
+            if (chat && chat.messages.length > 0) {
+                // Get the last user message
+                const lastUserMessage = [...chat.messages]
+                    .reverse()
+                    .find(msg => msg.role === 'user');
+                if (lastUserMessage) {
+                    previousMessage = lastUserMessage.content;
+                }
+            }
+        }
+
         const result = await analyzeDentalImage(
             req.file, 
             req.student._id, 
             message, 
-            chatId
+            chatId,
+            previousMessage
         );
         
         res.status(200).json(result);
