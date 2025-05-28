@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import { analyzeWithGemini } from './geminiService.js';
 import { uploadImage } from '../imageService.js';
 import Chat from '../../models/chatSchema.js';
+import sharp from 'sharp';
 
 dotenv.config();
 
@@ -12,8 +13,22 @@ const convertImageForAI = (base64Image) => {
     if (!base64Image) {
         throw new Error('No image data received from AI service');
     }
-    // The response is already in the correct format (data:image/png;base64,...)
     return base64Image;
+};
+
+const compressImageForAI = async (buffer) => {
+    try {
+        const compressedBuffer = await sharp(buffer)
+            .resize(1024, 1024, { 
+                fit: 'inside',
+                withoutEnlargement: true
+            })
+            .jpeg({ quality: 85 })
+            .toBuffer();
+        return compressedBuffer;
+    } catch (error) {
+        throw new Error(`Image compression failed: ${error.message}`);
+    }
 };
 
 export const analyzeDentalImage = async (imageFile, studentId, userMessage, chatId = null) => {
@@ -25,16 +40,18 @@ export const analyzeDentalImage = async (imageFile, studentId, userMessage, chat
             const uploadedUrl = await uploadImage([imageFile]);
             imageUrl = uploadedUrl[0];
 
+            const compressedBuffer = await compressImageForAI(imageFile.buffer);
+            
             const formData = new FormData();
-            const imageBlob = new Blob([imageFile.buffer], { type: imageFile.mimetype || 'image/jpeg' });
-            formData.append('image', imageBlob, imageFile.originalname || 'image.jpg');
+            const imageBlob = new Blob([compressedBuffer], { type: 'image/jpeg' });
+            formData.append('image', imageBlob, 'compressed-image.jpg');
 
             const response = await axios.post(`${AI_API_URL}/predict`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
                 timeout: 30000,
-                responseType: 'text' // Expect text response instead of JSON
+                responseType: 'text'
             });
 
             if (!response.data) {
