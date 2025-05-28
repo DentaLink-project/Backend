@@ -8,6 +8,17 @@ dotenv.config();
 
 const AI_API_URL = process.env.AI_API_URL;
 
+const getValidApiUrl = () => {
+    if (!AI_API_URL) {
+        throw new Error('AI_API_URL is not defined in environment variables');
+    }
+    
+    if (!AI_API_URL.startsWith('http://') && !AI_API_URL.startsWith('https://')) {
+        return `http://${AI_API_URL}`;
+    }
+    return AI_API_URL;
+};
+
 const convertImageForAI = (base64Image) => {
     if (!base64Image) {
         throw new Error('No image data received from AI service');
@@ -28,12 +39,17 @@ export const analyzeDentalImage = async (imageFile, studentId, userMessage, chat
             const imageBlob = new Blob([imageFile.buffer], { type: imageFile.mimetype || 'image/jpeg' });
             formData.append('image', imageBlob, imageFile.originalname || 'image.jpg');
 
-            const response = await axios.post(`${AI_API_URL}/predict`, formData, {
+            const apiUrl = getValidApiUrl();
+            console.log('Making request to AI API:', apiUrl);
+
+            const response = await axios.post(`${apiUrl}/predict`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
+                    'Accept': 'text/plain',
                 },
                 timeout: 30000,
-                responseType: 'text' // Expect text response instead of JSON
+                responseType: 'text',
+                withCredentials: false // Don't send cookies
             });
 
             if (!response.data) {
@@ -87,6 +103,11 @@ export const analyzeDentalImage = async (imageFile, studentId, userMessage, chat
         };
     } catch (error) {
         console.error('Error in analyzeDentalImage:', error);
+        if (error.response) {
+            console.error('Response status:', error.response.status);
+            console.error('Response headers:', error.response.headers);
+            console.error('Response data:', error.response.data);
+        }
         throw new Error(error.response?.data || error.message || 'Failed to analyze dental image');
     }
 };
