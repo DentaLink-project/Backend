@@ -4,16 +4,31 @@ import { analyzeWithGemini } from './geminiService.js';
 import { uploadImage } from '../imageService.js';
 import Chat from '../../models/chatSchema.js';
 import sharp from 'sharp';
-
 dotenv.config();
 
 const AI_API_URL = process.env.AI_API_URL;
 
-const convertImageForAI = (base64Image) => {
+const convertBase64ToJPEG = async (base64Image) => {
     if (!base64Image) {
-        throw new Error('No image data received from AI service');
+        throw new Error('No image data received');
     }
-    return base64Image;
+
+    try {
+        const base64Data = base64Image.includes('base64,') 
+            ? base64Image.split('base64,')[1] 
+            : base64Image;
+
+        const imageBuffer = Buffer.from(base64Data, 'base64');
+
+        const processedBuffer = await sharp(imageBuffer)
+            .jpeg({ quality: 85 })
+            .toBuffer();
+
+        return `data:image/jpeg;base64,${processedBuffer.toString('base64')}`;
+    } catch (error) {
+        console.error('Base64 image conversion error:', error);
+        throw new Error('Failed to convert base64 image');
+    }
 };
 
 const compressImageForAI = async (buffer) => {
@@ -59,7 +74,7 @@ export const analyzeDentalImage = async (imageFile, studentId, userMessage, chat
             }
 
             imageAnalysis = {
-                annotatedImage: convertImageForAI(response.data)
+                annotatedImage: await convertBase64ToJPEG(response.data)
             };
         }
 

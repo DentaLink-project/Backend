@@ -11,7 +11,7 @@ const toolSchema= new mongoose.Schema({
     price: { type: Number, required: true },
     description: { type: String, required: true },
     category: { type: String, required: true },
-    images: { type: [String], required: true },
+    image: { type: [String], required: true },
     reviews: { type: [reviewSchema], default: [] },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'Student', required: true },
 }, { timestamps: true });

@@ -7,14 +7,14 @@ export const createToolService = async ({ toolName, price, description, category
             throw new Error("Image is required");
         }
 
-        const uploadedImageUrl = await uploadImage(image);
+        const uploadedImageUrl = await uploadImage([image]);
 
         const tool = await Tool.create({ 
             toolName, 
             price, 
             description, 
             category, 
-            images: [uploadedImageUrl], 
+            image: uploadedImageUrl, 
             reviews, 
             createdBy 
         });
