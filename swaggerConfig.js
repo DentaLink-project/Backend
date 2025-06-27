@@ -12,7 +12,7 @@ const options = {
         },
         servers: [
             {
-                url: 'https://backend-production-0555.up.railway.app/api',
+                url: 'https://backend-production-4059.up.railway.app/api',
             },
         ],
         components: {
