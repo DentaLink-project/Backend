@@ -7,18 +7,38 @@ export const getCartDetailsService = async (studentId) => {
             select: "toolName price description images"
         });
 
-        if (!cart) throw new Error("Cart not found");
+        if (!cart) {
+            throw new Error("Cart not found");
+        }
 
+        // Filter out items with null tools and recalculate total price
         const validItems = cart.items.filter(item => item.tool !== null);
         
         if (validItems.length !== cart.items.length) {
+            console.warn(`Removed ${cart.items.length - validItems.length} items with null tools from cart`);
             cart.items = validItems;
             
+            // Recalculate total price with null checks
             cart.totalPrice = cart.items.reduce((total, item) => {
-                return total + (item.quantity * (item.tool ? item.tool.price : 0));
+                if (item.tool && typeof item.tool.price === 'number') {
+                    return total + (item.quantity * item.tool.price);
+                } else {
+                    console.warn(`Tool has no price for item: ${item.tool}`);
+                    return total;
+                }
             }, 0);
             
             await cart.save();
+        } else {
+            // Even if all items are valid, still check for price calculation
+            cart.totalPrice = cart.items.reduce((total, item) => {
+                if (item.tool && typeof item.tool.price === 'number') {
+                    return total + (item.quantity * item.tool.price);
+                } else {
+                    console.warn(`Tool has no price for item: ${item.tool}`);
+                    return total;
+                }
+            }, 0);
         }
 
         return cart;
