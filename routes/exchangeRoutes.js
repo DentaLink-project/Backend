@@ -8,7 +8,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /exchange/add:
+ * /exchanges/add:
  *   post:
  *     summary: Add a new exchange
  *     tags: [Exchange]
@@ -48,7 +48,7 @@ router.post("/add", checkAuth, upload.array("images"), exchangeValidator, addExc
 
 /**
  * @swagger
- * /exchange:
+ * /exchanges:
  *   get:
  *     summary: Fetch all exchanges
  *     tags: [Exchange]
@@ -64,7 +64,7 @@ router.get("/", checkAuth, fetchAllExchanges);
 
 /**
  * @swagger
- * /exchange/search:
+ * /exchanges/search:
  *   get:
  *     summary: Search exchanges
  *     tags: [Exchange]
@@ -89,7 +89,7 @@ router.get("/search", checkAuth, searchExchanges);
 
 /**
  * @swagger
- * /exchange/toggle:
+ * /exchanges/toggle:
  *   post:
  *     summary: Toggle favorite status of an exchange
  *     tags: [Exchange]
@@ -114,7 +114,7 @@ router.post("/toggle", checkAuth, toggleFavoriteExchangeController);
 
 /**
  * @swagger
- * /exchange/update/{id}:
+ * /exchanges/update/{id}:
  *   put:
  *     summary: Update an exchange
  *     tags: [Exchange]
